@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import CalculationUtils.ClusterUtils;
-import DataObjects.Cluster;
 
 public class Main {
 
@@ -17,74 +16,34 @@ public class Main {
 		BufferedImage alteredImage = ImageIO.read(file);
 		int width = alteredImage.getWidth();
 		int height = alteredImage.getHeight();
-		int analyzedClusterSizeX = 1;
+		int analyzedClusterSizeX = 2;
 		int analyzedClusterSizeY = 2;
 
-		for (int tolerance = 333333; tolerance < 999999; tolerance = tolerance + 111111) {
+		for (int tolerance = 696969; tolerance < 777777; tolerance = tolerance + 111111) {
 			ArrayList<BufferedImage> processedImages = new ArrayList<>();
-			for (int pixelShiftX = 0; pixelShiftX < analyzedClusterSizeX; pixelShiftX++) {
-				for (int pixelShiftY = 0; pixelShiftY < analyzedClusterSizeY; pixelShiftY++) {
-					Cluster[][] reducedPictureMatrix = ClusterUtils.createClusterMatrix(alteredImage,
-							analyzedClusterSizeX, analyzedClusterSizeY, pixelShiftX, pixelShiftY);
 
-					BufferedImage processedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-					Cluster[][] matchingClusterMatrix = ClusterUtils
-							.findSimilarHorrizontalAndVerticalNeighboringClusters(2, tolerance, reducedPictureMatrix);
-
-					for (int i = 0; i < matchingClusterMatrix.length; i++) {
-						for (int j = 0; j < matchingClusterMatrix[0].length; j++) {
-							if (matchingClusterMatrix[i][j] == null) {
-								continue;
-							}
-							ClusterUtils.copyMatchingPixelsToNewImage(processedImage, alteredImage,
-									matchingClusterMatrix[i][j]);
-						}
-					}
-					processedImages.add(processedImage);
-				}
-			}
+			// Create an array of images with all combinations of pixel shift that are
+			// possible for the given
+			// cluster sizes x and y.
+			ClusterUtils.generatePreliminaryImageCollection(alteredImage, width, height, analyzedClusterSizeX,
+					analyzedClusterSizeY, tolerance, processedImages);
 
 			BufferedImage finalProcessedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					int[] pixelsAtPosition = new int[processedImages.size() - 1];
-					for (int imagePositionCounter = 0; imagePositionCounter < processedImages.size()
-							- 1; imagePositionCounter++) {
+			// Compare pixels in a given Position in all preliminary images of provided
+			// image array.
+			// Returns image with pixels that where the same in all images.
+			ClusterUtils.vectorilPixelCompare(width, height, processedImages, finalProcessedImage);
 
-						pixelsAtPosition[imagePositionCounter] = processedImages.get(imagePositionCounter).getRGB(x, y);
-					}
+			// Removes artifacts, small areas of pixels which where found to be similar but
+			// can't possibly be, as they are to small to be hand painted.
+			ClusterUtils.removeSpecs(finalProcessedImage, analyzedClusterSizeX, analyzedClusterSizeY, 41);
 
-					boolean allPixelsAreSimilar = true;
-					unsimmilarPixel: for (int similarrityOne = 0; similarrityOne < pixelsAtPosition.length; similarrityOne++) {
-						for (int similarrityTwo = 0; similarrityTwo < pixelsAtPosition.length; similarrityTwo++) {
-							if (pixelsAtPosition[similarrityOne] != pixelsAtPosition[similarrityTwo]) {
-								allPixelsAreSimilar = false;
-								break unsimmilarPixel;
-							}
-						}
-					}
-					if (allPixelsAreSimilar) {
-						finalProcessedImage.setRGB(x, y, pixelsAtPosition[0]);
-					} else {
-						finalProcessedImage.setRGB(x, y, 0);
-					}
-				}
-			}
+			// Fills gaps in image, where no matching pixels have been found but where they
+			// should be.
+			ClusterUtils.fillGaps(alteredImage, finalProcessedImage, 69);
 
-			for (int pixelShiftX = 0; pixelShiftX < analyzedClusterSizeX; pixelShiftX++) {
-				for (int pixelShiftY = 0; pixelShiftY < analyzedClusterSizeY; pixelShiftY++) {
-					for (int clusterEnlargmentFactor = 1; clusterEnlargmentFactor < 31; clusterEnlargmentFactor++)
-						ClusterUtils.removeSpecs(finalProcessedImage, analyzedClusterSizeX * clusterEnlargmentFactor,
-								analyzedClusterSizeY * clusterEnlargmentFactor, pixelShiftX, pixelShiftY);
-				}
-			}
-
-			for (int gapFillings = 0; gapFillings < 10; gapFillings++) {
-				ClusterUtils.fillGaps(alteredImage, finalProcessedImage);
-			}
-
+			// Save the resulting image.
 			File extractedFile = new File("C:\\Users\\jt\\Pictures\\FINAL_altered_calculatd_tollerance_" + tolerance
 					+ "_specRemovalWith_ASYMMETRIC_CLUSTER_SIZE_ClusterSizeToTen_AND_GAP_FILLING_10" + ".png");
 			try {
