@@ -1,1 +1,1 @@
-package CalculationUtils;
+package calculationutils;
