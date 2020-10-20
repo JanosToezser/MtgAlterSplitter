@@ -12,8 +12,6 @@ import CalculationUtils.ClusterUtils;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		// Nonsense change
-
 		File file = new File("C:\\Users\\jt\\Pictures\\FINAL.png");
 		BufferedImage alteredImage = ImageIO.read(file);
 		int width = alteredImage.getWidth();
