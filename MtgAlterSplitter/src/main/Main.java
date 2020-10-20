@@ -40,11 +40,11 @@ public class Main {
 
 			// Removes artifacts, small areas of pixels which where found to be similar but
 			// can't possibly be, as they are to small to be hand painted.
-			ClusterUtils.removeSpecs(finalProcessedImage, analyzedClusterSizeX, analyzedClusterSizeY, 41);
+			ClusterUtils.removeSpecs(finalProcessedImage, analyzedClusterSizeX, analyzedClusterSizeY, 4);
 
 			// Fills gaps in image, where no matching pixels have been found but where they
 			// should be.
-			ClusterUtils.fillGaps(alteredImage, finalProcessedImage, 69);
+			ClusterUtils.fillGaps(alteredImage, finalProcessedImage, 4);
 
 			// Save the resulting image.
 			File extractedFile = new File("C:\\Users\\jt\\Pictures\\FINAL_altered_calculatd_tollerance_" + tolerance
