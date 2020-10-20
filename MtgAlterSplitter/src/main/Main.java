@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import CalculationUtils.ClusterUtils;
+import calculationutils.ClusterUtils;
 
 public class Main {
 

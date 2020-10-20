@@ -1,10 +1,10 @@
-package CalculationUtils;
+package calculationutils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import DataObjects.Cluster;
-import DataObjects.Pixel;
+import dataobjects.Cluster;
+import dataobjects.Pixel;
 
 public class ClusterUtils {
 

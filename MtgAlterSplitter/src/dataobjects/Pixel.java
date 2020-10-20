@@ -1,4 +1,4 @@
-package DataObjects;
+package dataobjects;
 
 public class Pixel {
 
