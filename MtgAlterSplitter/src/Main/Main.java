@@ -19,10 +19,9 @@ public class Main {
 		int analyzedClusterSizeX = 2;
 		int analyzedClusterSizeY = 2;
 
-		// "69 Dudes!" Bill S. Preston, Esq., and Ted "Theodore" Logan aka the "Wyld
-		// Stallyns"
+		// "69 Dudes!" Bill S. Preston, Esq., and Ted "Theodore" Logan aka the "Wyld Stallyns"
 		for (int tolerance = 696969; tolerance < 777777; tolerance = tolerance + 111111) {
-
+			
 			ArrayList<BufferedImage> processedImages = new ArrayList<>();
 
 			// Create an array of images with all combinations of pixel shift that are

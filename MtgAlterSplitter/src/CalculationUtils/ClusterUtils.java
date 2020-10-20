@@ -308,10 +308,10 @@ public class ClusterUtils {
 	}
 
 	public static void removeSpecs(BufferedImage image, int analyzedClusterSizeX, int analyzedClusterSizeY,
-			int clusterEnlargmentFactor) {
-		for (int pixelShiftX = 0; pixelShiftX < analyzedClusterSizeX * clusterEnlargmentFactor; pixelShiftX++) {
-			for (int pixelShiftY = 0; pixelShiftY < analyzedClusterSizeY * clusterEnlargmentFactor; pixelShiftY++) {
-				for (; clusterEnlargmentFactor < 41; clusterEnlargmentFactor++) {
+			int maximumClusterEnlargmentFactor) {
+		for (int clusterEnlargmentFactor = 1; clusterEnlargmentFactor < maximumClusterEnlargmentFactor; clusterEnlargmentFactor++) {
+			for (int pixelShiftX = 0; pixelShiftX < analyzedClusterSizeX * clusterEnlargmentFactor; pixelShiftX++) {
+				for (int pixelShiftY = 0; pixelShiftY < analyzedClusterSizeY * clusterEnlargmentFactor; pixelShiftY++) {
 					Cluster[][] clusterMatrix = createClusterMatrix(image, analyzedClusterSizeX, analyzedClusterSizeY,
 							pixelShiftX, pixelShiftY);
 
@@ -420,8 +420,8 @@ public class ClusterUtils {
 		}
 	}
 
-	public static void fillGaps(BufferedImage oldImage, BufferedImage newImage, int gapFillingCycles) {
-		for (; gapFillingCycles < 69; gapFillingCycles++) {
+	public static void fillGaps(BufferedImage oldImage, BufferedImage newImage, int maxGapFillingCycles) {
+		for (int gapFillingCycles = 0; gapFillingCycles < maxGapFillingCycles; gapFillingCycles++) {
 			for (int x = 0; x < newImage.getWidth() - 1; x++) {
 				for (int y = 0; y < newImage.getHeight() - 1; y++) {
 
