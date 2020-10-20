@@ -15,7 +15,7 @@ local.properties
 /.settings
 .loadpath
 .recommenders
-hs_err_pid25652.log 
+*.log 
 
 # External tool builders
 .externalToolBuilders/
